@@ -1,0 +1,38 @@
+% 1. Bersihkan workspace
+clc; clear; close all;
+
+% 2. Tentukan nama file dan lokasi data
+% PENTING: Ganti 'nama_file_tugas.xlsx' dengan nama file Excel kamu yang sebenarnya
+nama_file = 'nama_file_tugas.xlsx'; 
+nama_sheet = 'Grafik Sinusoidal';
+
+% Membaca data spesifik di kolom E dan F, mulai baris 11 sampai 100 
+% (Angka 100 bisa diperbesar jika datanya lebih panjang)
+data = readmatrix(nama_file, 'Sheet', nama_sheet, 'Range', 'E11:F100');
+
+% 3. Pisahkan data X (waktu) dan Y (nilai)
+t = data(:, 1); % Mengambil kolom pertama dari hasil pembacaan (Kolom E Excel)
+x = data(:, 2); % Mengambil kolom kedua dari hasil pembacaan (Kolom F Excel)
+
+% Menghapus baris kosong (NaN) jika rentang baris melebihi jumlah data asli
+valid_data = ~isnan(t) & ~isnan(x);
+t = t(valid_data);
+x = x(valid_data);
+
+% 4. Membuat Plot Grafik
+figure;
+% '-o' membuat garis dengan titik (marker) lingkaran
+% 'LineWidth' mengatur ketebalan garis, 'MarkerSize' mengatur besar titik
+plot(t, x, '-o', 'LineWidth', 1.5, 'MarkerSize', 4, 'MarkerFaceColor', 'b');
+
+% 5. Menambahkan Judul dan Label Sumbu
+title('UNPURE SINUSIODAL');
+xlabel('t [sec]');
+ylabel('x(t) - m');
+grid on; % Memunculkan garis tabel
+
+% Mempertegas sumbu 0 seperti di Excel
+hold on;
+xline(0, 'k', 'LineWidth', 1);
+yline(0, 'k', 'LineWidth', 1);
+hold off;
